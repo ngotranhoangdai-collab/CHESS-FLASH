@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons for modern UI -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chess.js Library for flawless chess rules -->
+    <!-- Chess.js Library for chess rules -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
     
     <style>
@@ -181,9 +181,9 @@
                 <div class="space-y-2">
                     <div class="flex justify-between items-center">
                         <p id="aiLabel" class="font-medium text-sm text-slate-200">Cấp độ Robot (Stockfish)</p>
-                        <span id="levelLabel" class="text-xs font-bold px-2 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/20">Cấp 3: Trung Bình</span>
+                        <span id="levelLabel" class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Cấp 1: Cực Dễ</span>
                     </div>
-                    <input type="range" id="levelRange" min="1" max="10" value="3" oninput="updateLevelUI(this.value)" class="w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+                    <input type="range" id="levelRange" min="1" max="10" value="1" oninput="updateLevelUI(this.value)" class="w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
                     <div class="flex justify-between text-[10px] text-slate-500 px-1">
                         <span id="rangeMin">Cấp 1</span>
                         <span id="rangeMid">Cấp 4 (Hoàn Tác)</span>
@@ -199,7 +199,7 @@
                     <span id="playBtnText">CHƠI NGAY</span>
                 </button>
                 <div class="text-xs text-slate-500 mt-4 tracking-wider font-semibold hover:text-emerald-400 transition-colors duration-300 cursor-default select-none text-center">
-                    © Bản Quyền Thuộc Gemini Và Đại Cờ Vua
+                    © Bản Quyền Thuộc Gemini và Đại Cờ Vua
                 </div>
                 <a href="https://youtube.com/@dai_co_vua" target="_blank" class="text-xs text-red-400 hover:text-red-300 mt-2 transition duration-200 flex items-center gap-1.5 font-semibold bg-red-500/10 px-3 py-1.5 rounded-lg border border-red-500/20 hover:border-red-500/40 shadow-sm">
                     <i class="fa-brands fa-youtube text-red-500 text-base"></i> Đại Cờ Vua
@@ -230,7 +230,7 @@
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                         </span>
                         <div class="text-right">
-                            <p class="font-bold text-slate-300"><span id="matchOpponentName">Đấu với Robot</span> <span id="robotLevelBadge" class="text-[10px] px-1 py-0.2 rounded bg-red-500/20 text-red-400 ml-1">Cấp 3</span></p>
+                            <p class="font-bold text-slate-300"><span id="matchOpponentName">Đấu với Robot</span> <span id="robotLevelBadge" class="text-[10px] px-1 py-0.2 rounded bg-red-500/20 text-red-400 ml-1">Cấp 1</span></p>
                             <p class="text-[10px] text-slate-500" id="aiStatusText">Đang chờ bạn đi quân...</p>
                         </div>
                     </div>
@@ -256,7 +256,7 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-sm text-slate-200">STOCKFISH v1.0</h4>
-                                <p class="text-[10px] text-slate-400"><span id="matchEloSim">Hệ số mô phỏng:</span> <span id="opponentEloLabel">1450</span> Elo</p>
+                                <p class="text-[10px] text-slate-400"><span id="matchEloSim">Hệ số mô phỏng:</span> <span id="opponentEloLabel">1150</span> Elo</p>
                             </div>
                         </div>
                         <div id="aiThinkingLoader" class="hidden items-center space-x-1.5 bg-red-500/10 text-red-400 px-2.5 py-1 rounded text-xs">
@@ -269,13 +269,12 @@
 
                     <!-- Interactive Chess Board Box -->
                     <div id="boardContainer" class="w-full max-w-[420px] md:max-w-[480px] aspect-square bg-slate-950 p-1.5 rounded-b-xl border-b border-x border-slate-800 shadow-xl relative select-none">
-                        <!-- Chess Grid (Rendered programmatically) -->
+                        <!-- Chess Grid -->
                         <div id="chessBoard" class="grid grid-cols-8 grid-rows-8 w-full h-full relative">
-                            <!-- Squares and pieces will be built dynamically via JS -->
                         </div>
                     </div>
 
-                    <!-- Action Controls (Directly below board) -->
+                    <!-- Action Controls -->
                     <div class="w-full max-w-[420px] md:max-w-[480px] grid grid-cols-2 gap-3 pt-2">
                         <!-- Resign button -->
                         <button id="resignBtn" onclick="showResignConfirm()" class="py-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 hover:border-red-500/40 rounded-xl font-bold text-sm transition-all flex items-center justify-center space-x-2">
@@ -320,7 +319,6 @@
                                 Chưa có nước đi nào thực hiện...
                             </div>
                             <div id="movesTable" class="grid grid-cols-12 gap-y-1.5 text-xs text-slate-300 font-mono">
-                                <!-- Format: Row # | White Move | Black Move -->
                             </div>
                         </div>
                     </div>
@@ -401,7 +399,6 @@
 
                 <!-- Main Status Icon -->
                 <div id="resultIconBox" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
-                    <!-- Icon injected here -->
                 </div>
 
                 <h2 id="resultTitle" class="text-3xl font-extrabold text-white mb-2">CHIẾN THẮNG!</h2>
@@ -700,10 +697,10 @@
     <script>
         // Init global game states
         let game = new Chess();
-        let currentLevel = 3;
+        let currentLevel = 1; // Default level is now 1 (Cực Dễ)
         let userPieceStyle = 'normal'; // Default to 'normal' (Unicode)
         let playerElo = 100; // Default minimum initial Elo is 100
-        let robotElo = 1450;
+        let robotElo = 1150; // Level 1 Elo Simulation
         let selectedSquare = null;
         let activeLegalMoves = [];
         let undoHistory = []; // Stack to support custom undos
