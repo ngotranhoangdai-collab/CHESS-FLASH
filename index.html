@@ -194,7 +194,7 @@
             </div>
 
             <div class="w-full max-w-md flex flex-col items-center">
-                <button id="playBtn" onclick="startGame()" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 text-lg font-bold rounded-xl shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/25 active:scale-[0.98] transition-all transform flex items-center justify-center space-x-3">
+                <button id="playBtn" onclick="showSetupModal()" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 text-lg font-bold rounded-xl shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/25 active:scale-[0.98] transition-all transform flex items-center justify-center space-x-3">
                     <i class="fa-solid fa-play text-xl"></i>
                     <span id="playBtnText">CHƠI NGAY</span>
                 </button>
@@ -206,7 +206,6 @@
                 </a>
             </div>
         </div>
-
 
         <!-- ================= PLAYING GAME SCREEN ================= -->
         <div id="gameScreen" class="hidden animate-fade-in">
@@ -248,10 +247,10 @@
                 <!-- Left Column (Board Container & Main Actions) -->
                 <div class="lg:col-span-7 flex flex-col items-center space-y-4">
                     
-                    <!-- Top Info Label (Robot Profile) -->
+                    <!-- Top Info Label (Robot Profile & Clock) -->
                     <div class="w-full max-w-[420px] md:max-w-[480px] bg-slate-950/40 p-2.5 rounded-t-xl border-t border-x border-slate-800 flex justify-between items-center">
                         <div class="flex items-center space-x-2">
-                            <div class="w-8 h-8 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center text-red-400">
+                            <div class="w-8 h-8 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center text-red-400 animate-pulse">
                                 <i class="fa-solid fa-robot"></i>
                             </div>
                             <div>
@@ -259,6 +258,13 @@
                                 <p class="text-[10px] text-slate-400"><span id="matchEloSim">Hệ số mô phỏng:</span> <span id="opponentEloLabel">1150</span> Elo</p>
                             </div>
                         </div>
+                        
+                        <!-- Opponent Timer Clock -->
+                        <div class="flex items-center space-x-2 bg-slate-900/90 border border-red-500/30 px-3 py-1 rounded-lg">
+                            <i class="fa-regular fa-hourglass-half text-red-400 animate-spin" style="animation-duration: 3s"></i>
+                            <span id="blackClockDisplay" class="font-mono text-sm font-bold text-red-400">--:--</span>
+                        </div>
+
                         <div id="aiThinkingLoader" class="hidden items-center space-x-1.5 bg-red-500/10 text-red-400 px-2.5 py-1 rounded text-xs">
                             <span class="animate-bounce inline-block w-1.5 h-1.5 bg-red-400 rounded-full"></span>
                             <span class="animate-bounce delay-75 inline-block w-1.5 h-1.5 bg-red-400 rounded-full"></span>
@@ -277,12 +283,12 @@
                     <!-- Action Controls -->
                     <div class="w-full max-w-[420px] md:max-w-[480px] grid grid-cols-2 gap-3 pt-2">
                         <!-- Resign button -->
-                        <button id="resignBtn" onclick="showResignConfirm()" class="py-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 hover:border-red-500/40 rounded-xl font-bold text-sm transition-all flex items-center justify-center space-x-2">
+                        <button id="resignBtn" onclick="showResignConfirm()" class="py-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 hover:border-red-500/40 rounded-xl font-bold text-sm transition-all transform active:scale-95 flex items-center justify-center space-x-2">
                             <i class="fa-solid fa-flag"></i>
                             <span id="resignBtnText">Chấp Nhận Thua</span>
                         </button>
                         <!-- Undo Move button -->
-                        <button id="undoMoveBtn" onclick="handleUndoRequest()" class="py-3 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 border border-slate-700/50 rounded-xl font-bold text-sm transition-all flex items-center justify-center space-x-2 disabled:opacity-40 disabled:cursor-not-allowed">
+                        <button id="undoMoveBtn" onclick="handleUndoRequest()" class="py-3 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 border border-slate-700/50 rounded-xl font-bold text-sm transition-all transform active:scale-95 flex items-center justify-center space-x-2 disabled:opacity-40 disabled:cursor-not-allowed">
                             <i class="fa-solid fa-rotate-left"></i>
                             <span id="undoBtnText">Hoàn Tác Nước Đi</span>
                         </button>
@@ -292,7 +298,7 @@
                 <!-- Right Column (Game Log, Evaluation Gauge & Stats) -->
                 <div class="lg:col-span-5 w-full flex flex-col space-y-4">
                     
-                    <!-- Player status card -->
+                    <!-- Player status card & Timer Clock -->
                     <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
@@ -303,7 +309,14 @@
                                 <p class="text-xs text-emerald-400" id="gamePlayerElo">Elo: 100</p>
                             </div>
                         </div>
-                        <div id="playerIndicator" class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs px-2.5 py-1 rounded font-semibold animate-pulse">
+
+                        <!-- Player Timer Clock -->
+                        <div class="flex items-center space-x-2 bg-slate-900 border border-emerald-500/30 px-4 py-1.5 rounded-xl">
+                            <i id="whiteClockIcon" class="fa-regular fa-clock text-emerald-400 animate-pulse"></i>
+                            <span id="whiteClockDisplay" class="font-mono text-base font-extrabold text-emerald-400">--:--</span>
+                        </div>
+
+                        <div id="playerIndicator" class="hidden bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs px-2.5 py-1 rounded font-semibold animate-pulse">
                             Lượt Của Bạn
                         </div>
                     </div>
@@ -337,6 +350,126 @@
 
 
         <!-- ================= MODALS & POPUPS ================= -->
+
+        <!-- PRE-GAME SETUP DIALOG MODAL -->
+        <div id="gameSetupModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 text-left shadow-2xl animate-scale-up">
+                <h3 class="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 mb-2 flex items-center">
+                    <i class="fa-solid fa-hourglass-start mr-2"></i> <span id="setupModalTitle">Cài Đặt Đồng Hồ & Biến Thể</span>
+                </h3>
+                <p id="setupModalDesc" class="text-xs text-slate-400 mb-6 border-b border-slate-800 pb-2">Hãy chọn chế độ chơi và mức thời gian giới hạn trước khi bắt đầu trận cờ!</p>
+
+                <!-- Time Category Selectors -->
+                <div class="space-y-4 mb-6">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-stopwatch text-emerald-400"></i> <span id="timeSelectLabel">Chọn thời gian trận đấu</span>
+                    </label>
+
+                    <div class="space-y-3">
+                        <!-- Hyperbullet / Bullet -->
+                        <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-800/80">
+                            <p class="text-[10px] text-amber-400 font-bold uppercase mb-1.5 tracking-wide"><i class="fa-solid fa-fire mr-1"></i> Cờ Siêu Đạn & Cờ Đạn</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="selectTimeOption(15, this)" class="time-opt-btn px-3 py-1.5 bg-emerald-500 text-slate-950 font-bold rounded-lg text-xs transition duration-200 shadow-md">
+                                    CỜ SIÊU ĐẠN: 1/4 Giây (15s)
+                                </button>
+                                <button onclick="selectTimeOption(60, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
+                                    CỜ ĐẠN: 1 Phút
+                                </button>
+                                <button onclick="selectTimeOption(120, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
+                                    CỜ ĐẠN: 2 Phút
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Blitz -->
+                        <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-800/80">
+                            <p class="text-[10px] text-emerald-400 font-bold uppercase mb-1.5 tracking-wide"><i class="fa-solid fa-bolt mr-1"></i> Cờ Chớp</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="selectTimeOption(180, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
+                                    CỜ CHỚP: 3 Phút
+                                </button>
+                                <button onclick="selectTimeOption(300, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
+                                    CỜ CHỚP: 5 Phút
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Rapid -->
+                        <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-800/80">
+                            <p class="text-[10px] text-teal-400 font-bold uppercase mb-1.5 tracking-wide"><i class="fa-solid fa-gauge-high mr-1"></i> Cờ Nhanh</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="selectTimeOption(420, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
+                                    CỜ NHANH: 7 Phút
+                                </button>
+                                <button onclick="selectTimeOption(540, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
+                                    CỜ NHANH: 9 Phút
+                                </button>
+                                <button onclick="selectTimeOption(600, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
+                                    CỜ NHANH: 10 Phút
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Classical -->
+                        <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-800/80">
+                            <p class="text-[10px] text-indigo-400 font-bold uppercase mb-1.5 tracking-wide"><i class="fa-solid fa-hourglass mr-1"></i> Cờ Chậm</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="selectTimeOption(1500, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
+                                    CỜ CHẬM: 25 Phút
+                                </button>
+                                <button onclick="selectTimeOption(1800, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
+                                    CỜ CHẬM: 30 Phút
+                                </button>
+                                <button onclick="selectTimeOption(2700, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
+                                    CỜ CHẬM: 45 Phút
+                                </button>
+                                <button onclick="selectTimeOption(3600, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
+                                    CỜ CHẬM: 60 Phút
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- No Time -->
+                        <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-800/80">
+                            <p id="noTimeTitle" class="text-[10px] text-slate-400 font-bold uppercase mb-1.5 tracking-wide"><i class="fa-solid fa-infinite mr-1"></i> Không Giới Hạn</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button id="noTimeBtn" onclick="selectTimeOption(-1, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
+                                    KHÔNG THỜI GIAN
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Variant Selection -->
+                <div class="mb-6">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-shuffle text-teal-400"></i> <span id="variantSelectLabel">Chọn Biến Thể Cờ Vua</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button id="variantStdBtn" onclick="selectVariantOption('standard')" class="flex flex-col p-3 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl transition text-left">
+                            <span class="font-bold text-sm" id="variantStdTitle">Bình Thường</span>
+                            <span class="text-[10px] text-slate-400 mt-1" id="variantStdDesc">Bàn cờ vua tiêu chuẩn quốc tế.</span>
+                        </button>
+                        <button id="variant960Btn" onclick="selectVariantOption('chess960')" class="flex flex-col p-3 bg-slate-850 hover:bg-slate-800 text-slate-300 border border-slate-700/50 rounded-xl transition text-left">
+                            <span class="font-bold text-sm flex items-center gap-1.5">Chess 960 <i class="fa-solid fa-dice text-amber-400"></i></span>
+                            <span class="text-[10px] text-slate-400 mt-1" id="variant960Desc">Ngẫu nhiên thế trận xuất phát mới mẻ.</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Footer Operations -->
+                <div class="flex space-x-3 border-t border-slate-800 pt-4">
+                    <button onclick="closeSetupModal()" class="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl text-sm transition">
+                        Hủy
+                    </button>
+                    <button onclick="startTimedChessGame()" class="flex-1 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-bold rounded-xl text-sm shadow-lg transition">
+                        BẮT ĐẦU THI ĐẤU
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <!-- 1. Promotion Modal Overlay -->
         <div id="promotionModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
@@ -405,7 +538,7 @@
                 <p id="resultDesc" class="text-sm text-slate-400 mb-4">Bạn đã thắng đối thủ robot bằng tài năng của mình.</p>
 
                 <!-- Encouraging words container -->
-                <div id="resultEncouragement" class="px-4 py-2 mb-6 bg-slate-950/50 rounded-xl border border-emerald-500/20 text-emerald-300 text-xs italic">
+                <div id="resultEncouragement" class="px-4 py-2 mb-6 bg-slate-950/50 rounded-xl border border-emerald-500/20 text-emerald-300 text-xs italic text-center">
                     Hãy nỗ lực phát huy tối đa tiềm lực của mình bạn nhé! Cố lên!
                 </div>
 
@@ -693,7 +826,7 @@
     </script>
 
 
-    <!-- CHESS CORE ENGINE & MULTILINGUAL DICTIONARY -->
+    <!-- CHESS CORE ENGINE, CLOCKS, VARIANTS & MULTILINGUAL DICTIONARY -->
     <script>
         // Init global game states
         let game = new Chess();
@@ -705,6 +838,13 @@
         let activeLegalMoves = [];
         let undoHistory = []; // Stack to support custom undos
         let currentLang = 'vi'; // Default Vietnamese
+
+        // Setup clock variables
+        let selectedSeconds = 300; // Default: Blitz 5 minutes
+        let selectedVariant = 'standard'; // Default variant
+        let whiteTimeLeft = 300;
+        let blackTimeLeft = 300;
+        let timerInterval = null;
 
         // Multilingual Translation Dictionary
         const i18n = {
@@ -797,7 +937,18 @@
                 draw_msg_1: "Trận đấu rất kịch tính! Một kết quả hòa vô cùng xứng đáng cho những nỗ lực kiên cường của bạn!",
                 draw_msg_2: "Kỳ tài ngang sức! Bạn đã phòng thủ cực kỳ kiên cường trước Robot!",
                 draw_msg_3: "Cân tài cân sức! Thế trận chặt chẽ đến những giây phút cuối cùng, một ván cờ rất hay!",
-                moves_count: " Nước"
+                moves_count: " Nước",
+                setupModalTitle: "Cài Đặt Đồng Hồ & Biến Thể",
+                setupModalDesc: "Hãy chọn chế độ chơi và mức thời gian giới hạn trước khi bắt đầu trận cờ!",
+                timeSelectLabel: "Chọn thời gian trận đấu",
+                variantSelectLabel: "Chọn Biến Thể Cờ Vua",
+                variantStdTitle: "Bình Thường",
+                variantStdDesc: "Bàn cờ vua tiêu chuẩn quốc tế.",
+                variant960Desc: "Ngẫu nhiên thế trận xuất phát mới mẻ.",
+                win_time_forfeit: "BẠN THẮNG DO ĐỐI THỦ HẾT GIỜ!",
+                loss_time_forfeit: "BẠN THUA DO HẾT GIỜ SUY NGHĨ!",
+                no_time_title: "Không Giới Hạn",
+                no_time_btn_txt: "KHÔNG THỜI GIAN"
             },
             en: {
                 topTitleTag: "Next Generation Chess Game",
@@ -847,8 +998,8 @@
                 level_desc_1: "Very Easy",
                 level_desc_2: "Easy",
                 level_desc_3: "Medium",
-                level_desc_4: "Skilled",
-                level_desc_5: "Challenging",
+                level_desc_4: "Challenging",
+                level_desc_5: "Competitive",
                 level_desc_6: "Competent",
                 level_desc_7: "Professional",
                 level_desc_8: "Master",
@@ -888,7 +1039,18 @@
                 draw_msg_1: "Highly suspenseful match! A well-deserved draw for both warriors!",
                 draw_msg_2: "Equal match of wits! You defended exceptionally well against the AI!",
                 draw_msg_3: "Symmetric skills! Tight structural play until the end, very well played!",
-                moves_count: " Moves"
+                moves_count: " Moves",
+                setupModalTitle: "Clock & Variant Settings",
+                setupModalDesc: "Choose play mode and time limit before entering the battle!",
+                timeSelectLabel: "Select Time Control",
+                variantSelectLabel: "Select Chess Variant",
+                variantStdTitle: "Standard Chess",
+                variantStdDesc: "Standard international chess layout.",
+                variant960Desc: "Fischer Random chess layout.",
+                win_time_forfeit: "YOU WIN ON TIME FORFEIT!",
+                loss_time_forfeit: "YOU LOSE ON TIME!",
+                no_time_title: "No Time Limit",
+                no_time_btn_txt: "NO TIME LIMIT"
             }
         };
 
@@ -1064,6 +1226,15 @@
             document.getElementById('emptyLogPrompt').innerText = dict.emptyLogPrompt;
             document.getElementById('tacticalAnalysisTitle').innerText = dict.tacticalAnalysisTitle;
             
+            // Setup Modal Translations
+            document.getElementById('setupModalTitle').innerText = dict.setupModalTitle;
+            document.getElementById('setupModalDesc').innerText = dict.setupModalDesc;
+            document.getElementById('timeSelectLabel').innerText = dict.timeSelectLabel;
+            document.getElementById('variantSelectLabel').innerText = dict.variantSelectLabel;
+            document.getElementById('variantStdTitle').innerText = dict.variantStdTitle;
+            document.getElementById('variantStdDesc').innerText = dict.variantStdDesc;
+            document.getElementById('variant960Desc').innerText = dict.variant960Desc;
+
             // Modals
             document.getElementById('promotionTitle').innerText = dict.promotionTitle;
             document.getElementById('promotionDesc').innerText = dict.promotionDesc;
@@ -1075,6 +1246,10 @@
             document.getElementById('resultEloTitle').innerText = dict.resultEloTitle;
             document.getElementById('resultDiffTitle').innerText = dict.resultDiffTitle;
             document.getElementById('backMenuText').innerText = dict.backMenuText;
+
+            // Update No Time Language
+            document.getElementById('noTimeTitle').innerHTML = `<i class="fa-solid fa-infinite mr-1"></i> ` + dict.no_time_title;
+            document.getElementById('noTimeBtn').innerText = dict.no_time_btn_txt;
 
             // Re-render UI parameters
             updateLevelUI(currentLevel);
@@ -1172,9 +1347,106 @@
             document.getElementById('menuRankDisplay').innerText = rank;
         }
 
-        // Setup the game screen and render pieces
-        function startGame() {
-            game = new Chess();
+        /* ---------------- PRE-GAME CONFIGURATION POPUP ---------------- */
+        function showSetupModal() {
+            document.getElementById('gameSetupModal').classList.remove('hidden');
+        }
+
+        function closeSetupModal() {
+            document.getElementById('gameSetupModal').classList.add('hidden');
+        }
+
+        function selectTimeOption(seconds, element) {
+            selectedSeconds = seconds;
+            // Update button styles
+            const buttons = document.querySelectorAll('.time-opt-btn');
+            buttons.forEach(btn => {
+                btn.className = "time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50";
+            });
+            element.className = "time-opt-btn px-3 py-1.5 bg-emerald-500 text-slate-950 font-bold rounded-lg text-xs transition duration-200 shadow-md";
+            playChessSound('move');
+        }
+
+        function selectVariantOption(variant) {
+            selectedVariant = variant;
+            const stdBtn = document.getElementById('variantStdBtn');
+            const b960Btn = document.getElementById('variant960Btn');
+
+            if (variant === 'standard') {
+                stdBtn.className = "flex flex-col p-3 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl transition text-left";
+                b960Btn.className = "flex flex-col p-3 bg-slate-850 hover:bg-slate-800 text-slate-300 border border-slate-700/50 rounded-xl transition text-left";
+            } else {
+                b960Btn.className = "flex flex-col p-3 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl transition text-left";
+                stdBtn.className = "flex flex-col p-3 bg-slate-850 hover:bg-slate-800 text-slate-300 border border-slate-700/50 rounded-xl transition text-left";
+            }
+            playChessSound('move');
+        }
+
+        // Generator for valid Fischer Random Chess 960 positions
+        function generateChess960FEN() {
+            let row = Array(8).fill(null);
+            
+            // 1. Bishops on opposite colored squares
+            let b1 = Math.floor(Math.random() * 4) * 2; // index 0, 2, 4, 6
+            let b2 = Math.floor(Math.random() * 4) * 2 + 1; // index 1, 3, 5, 7
+            row[b1] = 'b';
+            row[b2] = 'b';
+
+            // 2. King must be placed between the two Rooks
+            let emptyIndices = [];
+            for (let i = 0; i < 8; i++) {
+                if (row[i] === null) emptyIndices.push(i);
+            }
+
+            // Pick 3 random remaining slots to place R-K-R (Rook, King, Rook)
+            let rkrPositions = [];
+            while (rkrPositions.length < 3) {
+                let randomIndex = Math.floor(Math.random() * emptyIndices.length);
+                let selectedIndex = emptyIndices.splice(randomIndex, 1)[0];
+                rkrPositions.push(selectedIndex);
+            }
+            // Sort chosen indices to enforce R-K-R order
+            rkrPositions.sort((a, b) => a - b);
+            row[rkrPositions[0]] = 'r';
+            row[rkrPositions[1]] = 'k';
+            row[rkrPositions[2]] = 'r';
+
+            // 3. Fill remaining slots with Queen and Knights
+            emptyIndices = [];
+            for (let i = 0; i < 8; i++) {
+                if (row[i] === null) emptyIndices.push(i);
+            }
+
+            // Place Queen
+            let qIndex = Math.floor(Math.random() * emptyIndices.length);
+            row[emptyIndices.splice(qIndex, 1)[0]] = 'q';
+
+            // Remaining two slots are for Knights
+            row[emptyIndices[0]] = 'n';
+            row[emptyIndices[1]] = 'n';
+
+            // Build valid chess960 string
+            const backrankWhite = row.join('').toUpperCase();
+            const backrankBlack = row.join('').toLowerCase();
+
+            // Construct valid FEN
+            return `${backrankBlack}/pppppppp/8/8/8/8/PPPPPPPP/${backrankWhite} w - - 0 1`;
+        }
+    </script>
+
+    <!-- CLOCK TIMER MANAGEMENT DRIVER -->
+    <script>
+        function startTimedChessGame() {
+            closeSetupModal();
+
+            // Initialize chess.js based on chosen variant
+            if (selectedVariant === 'chess960') {
+                const fen960 = generateChess960FEN();
+                game = new Chess(fen960);
+            } else {
+                game = new Chess(); // Standard board
+            }
+
             undoHistory = [];
             selectedSquare = null;
             activeLegalMoves = [];
@@ -1183,6 +1455,12 @@
             document.getElementById('robotLevelBadge').innerText = `${currentLang === 'vi' ? 'Cấp' : 'Lvl'} ${currentLevel}`;
             updateEloDisplayOnMenus();
 
+            // Reset Clock variables
+            whiteTimeLeft = selectedSeconds;
+            blackTimeLeft = selectedSeconds;
+            updateClockDisplays();
+
+            // Transition UI screens
             document.getElementById('menuScreen').classList.add('hidden');
             document.getElementById('gameScreen').classList.remove('hidden');
 
@@ -1200,6 +1478,74 @@
             }
 
             document.getElementById('aiStatusText').innerText = dict.aiStatusText_init;
+
+            // Start clock countdown
+            startClockTimer();
+        }
+
+        function formatTimeValue(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function updateClockDisplays() {
+            if (selectedSeconds === -1) {
+                document.getElementById('whiteClockDisplay').innerText = "∞";
+                document.getElementById('blackClockDisplay').innerText = "∞";
+                return;
+            }
+            document.getElementById('whiteClockDisplay').innerText = formatTimeValue(whiteTimeLeft);
+            document.getElementById('blackClockDisplay').innerText = formatTimeValue(blackTimeLeft);
+        }
+
+        function startClockTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+
+            if (selectedSeconds === -1) {
+                // Do not run countdown
+                return;
+            }
+
+            timerInterval = setInterval(() => {
+                if (game.game_over()) {
+                    clearInterval(timerInterval);
+                    return;
+                }
+
+                // Tick countdown based on whose turn it is
+                if (game.turn() === 'w') {
+                    whiteTimeLeft--;
+                    if (whiteTimeLeft <= 0) {
+                        whiteTimeLeft = 0;
+                        updateClockDisplays();
+                        clearInterval(timerInterval);
+                        processGameTimeOut('w'); // White lost on time
+                    }
+                } else {
+                    blackTimeLeft--;
+                    if (blackTimeLeft <= 0) {
+                        blackTimeLeft = 0;
+                        updateClockDisplays();
+                        clearInterval(timerInterval);
+                        processGameTimeOut('b'); // Black (Robot) lost on time
+                    }
+                }
+                updateClockDisplays();
+            }, 1000);
+        }
+
+        function processGameTimeOut(losingSide) {
+            const dict = i18n[currentLang];
+            if (losingSide === 'w') {
+                // You lost on time
+                processGameTermination('loss');
+                document.getElementById('resultDesc').innerText = dict.loss_time_forfeit;
+            } else {
+                // Robot lost on time
+                processGameTermination('win');
+                document.getElementById('resultDesc').innerText = dict.win_time_forfeit;
+            }
         }
     </script>
 
@@ -1408,7 +1754,9 @@
         function saveUndoState() {
             undoHistory.push({
                 fen: game.fen(),
-                history: game.history({ verbose: true })
+                history: game.history({ verbose: true }),
+                whiteTime: whiteTimeLeft,
+                blackTime: blackTimeLeft
             });
         }
 
@@ -1427,6 +1775,9 @@
             // Pop last state
             const lastState = undoHistory.pop();
             game.load(lastState.fen);
+            whiteTimeLeft = lastState.whiteTime;
+            blackTimeLeft = lastState.blackTime;
+            updateClockDisplays();
             
             selectedSquare = null;
             activeLegalMoves = [];
@@ -1758,6 +2109,8 @@
         }
 
         function processGameTermination(outcome, drawType = 'generic') {
+            if (timerInterval) clearInterval(timerInterval); // Stop clock instantly
+
             let eloDiff = 0;
             let resultTitle = "";
             let resultDesc = "";
@@ -1849,6 +2202,7 @@
         }
 
         function resetToMenu() {
+            if (timerInterval) clearInterval(timerInterval); // Cleanup clocks
             stopVictoryFireworks();
             document.getElementById('resultModal').classList.add('hidden');
             document.getElementById('gameScreen').classList.add('hidden');
