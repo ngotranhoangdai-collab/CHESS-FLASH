@@ -98,7 +98,6 @@
 </head>
 <body class="min-h-screen flex items-center justify-center text-slate-100 p-2 md:p-4 overflow-x-hidden relative">
 
-    <!-- Sound & Canvas Assets Container -->
     <canvas id="fireworksCanvas" class="fixed inset-0 pointer-events-none z-45 hidden"></canvas>
 
     <!-- Main Container -->
@@ -116,7 +115,6 @@
                 <p id="topSubtitle" class="text-slate-400 text-sm md:text-base">Đối đầu AI thông minh - Thách thức giới hạn kỳ nghệ</p>
             </div>
 
-            <!-- Dashboard Stats -->
             <div class="flex space-x-6 bg-slate-950/60 p-4 rounded-xl border border-slate-800 w-full max-w-md justify-around">
                 <div class="text-center">
                     <p id="menuEloTitle" class="text-slate-400 text-xs uppercase tracking-wider">Hệ số ELO</p>
@@ -132,7 +130,7 @@
             <!-- Settings Board -->
             <div class="w-full max-w-md bg-slate-950/40 border border-slate-800/80 rounded-2xl p-6 space-y-6">
                 <h3 id="configTitle" class="text-lg font-bold border-b border-slate-800 pb-2 text-slate-300 flex items-center">
-                    <i class="fa-solid fa-sliders mr-2 text-emerald-500"></i> Cấu Hình Trận Đấu
+                    <i class="fa-solid fa-sliders mr-2 text-emerald-500"></i> Cấu Thiết Trận Đấu
                 </h3>
 
                 <!-- Language Config -->
@@ -195,7 +193,6 @@
                 </div>
             </div>
 
-            <!-- Play Button & Copyright -->
             <div class="w-full max-w-md flex flex-col items-center">
                 <button id="playBtn" onclick="startGame()" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 text-lg font-bold rounded-xl shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/25 active:scale-[0.98] transition-all transform flex items-center justify-center space-x-3">
                     <i class="fa-solid fa-play text-xl"></i>
@@ -204,7 +201,7 @@
                 <div class="text-xs text-slate-500 mt-4 tracking-wider font-semibold hover:text-emerald-400 transition-colors duration-300 cursor-default select-none text-center">
                     © Bản Quyền Thuộc Gemini Và Đại Cờ Vua
                 </div>
-                <a href="https://youtube.com/@daicovua" target="_blank" class="text-xs text-red-400 hover:text-red-300 mt-2 transition duration-200 flex items-center gap-1.5 font-semibold bg-red-500/10 px-3 py-1.5 rounded-lg border border-red-500/20 hover:border-red-500/40 shadow-sm">
+                <a href="https://youtube.com/@dai_co_vua" target="_blank" class="text-xs text-red-400 hover:text-red-300 mt-2 transition duration-200 flex items-center gap-1.5 font-semibold bg-red-500/10 px-3 py-1.5 rounded-lg border border-red-500/20 hover:border-red-500/40 shadow-sm">
                     <i class="fa-brands fa-youtube text-red-500 text-base"></i> Đại Cờ Vua
                 </a>
             </div>
@@ -240,13 +237,12 @@
 
                     <!-- Player Stats -->
                     <div class="bg-slate-950/80 px-4 py-1.5 rounded-xl border border-slate-800 text-xs text-left">
-                        <p id="statAccount" class="text-slate-400">Tài khoản</p>
-                        <p class="font-bold text-amber-400"><span id="statYou">Bạn</span> (<span id="playerEloLabel">100</span> ELO)</p>
+                        <p id="statYou" class="text-slate-400">Bạn</p>
+                        <p class="font-bold text-amber-400"><span id="playerEloLabel">100</span> ELO</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Game Arena Setup (Board & Sidebar Side-by-Side) -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 
                 <!-- Left Column (Board Container & Main Actions) -->
@@ -393,7 +389,7 @@
         </div>
 
         <!-- 3. Final Game Result Modal -->
-        <div id="resultModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div id="resultModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
             <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-8 text-center shadow-2xl animate-scale-up relative overflow-hidden">
                 
                 <!-- Handshake Effect for Draw State -->
@@ -736,7 +732,6 @@
                 returnBtn: "Trở về",
                 matchOpponentName: "Đấu với Robot",
                 aiStatusText_init: "Đang chờ bạn đi quân...",
-                statAccount: "Tài khoản",
                 statYou: "Bạn",
                 matchEloSim: "Hệ số mô phỏng:",
                 aiThinkingText: "Đang tính toán...",
@@ -804,7 +799,8 @@
                 loss_msg_3: "Một ván đấu đầy bài học quý giá. Kiên trì luyện tập chắc chắn bạn sẽ vượt qua!",
                 draw_msg_1: "Trận đấu rất kịch tính! Một kết quả hòa vô cùng xứng đáng cho những nỗ lực kiên cường của bạn!",
                 draw_msg_2: "Kỳ tài ngang sức! Bạn đã phòng thủ cực kỳ kiên cường trước Robot!",
-                draw_msg_3: "Cân tài cân sức! Thế trận chặt chẽ đến những giây phút cuối cùng, một ván cờ rất hay!"
+                draw_msg_3: "Cân tài cân sức! Thế trận chặt chẽ đến những giây phút cuối cùng, một ván cờ rất hay!",
+                moves_count: " Nước"
             },
             en: {
                 topTitleTag: "Next Generation Chess Game",
@@ -827,7 +823,6 @@
                 returnBtn: "Return",
                 matchOpponentName: "Opponent: Robot",
                 aiStatusText_init: "Waiting for your move...",
-                statAccount: "Account",
                 statYou: "You",
                 matchEloSim: "Simulated rating:",
                 aiThinkingText: "Calculating...",
@@ -895,15 +890,21 @@
                 loss_msg_3: "A highly valuable game. Keep practicing and you will prevail!",
                 draw_msg_1: "Highly suspenseful match! A well-deserved draw for both warriors!",
                 draw_msg_2: "Equal match of wits! You defended exceptionally well against the AI!",
-                draw_msg_3: "Symmetric skills! Tight structural play until the end, very well played!"
+                draw_msg_3: "Symmetric skills! Tight structural play until the end, very well played!",
+                moves_count: " Moves"
             }
         };
 
-        // Load Elo on startup
-        if (localStorage.getItem('chess_flash_elo')) {
-            playerElo = parseInt(localStorage.getItem('chess_flash_elo'));
-            if (isNaN(playerElo) || playerElo < 100) playerElo = 100;
+        // Load single player Elo data from local storage
+        function loadEloSystem() {
+            playerElo = parseInt(localStorage.getItem('chess_flash_elo')) || 100;
+            if (playerElo < 100) playerElo = 100;
             if (playerElo > 2900) playerElo = 2900;
+        }
+
+        // Save current Elo to storage
+        function savePlayerElo() {
+            localStorage.setItem('chess_flash_elo', playerElo);
         }
 
         // Load language preference
@@ -1055,7 +1056,6 @@
             // Game Screen
             document.getElementById('returnBtn').innerHTML = `<i class="fa-solid fa-arrow-left"></i> ` + dict.returnBtn;
             document.getElementById('matchOpponentName').innerText = dict.matchOpponentName;
-            document.getElementById('statAccount').innerText = dict.statAccount;
             document.getElementById('statYou').innerText = dict.statYou;
             document.getElementById('matchEloSim').innerText = dict.matchEloSim;
             document.getElementById('aiThinkingText').innerText = dict.aiThinkingText;
@@ -1140,6 +1140,7 @@
 
         // Initialize setup on window load
         window.onload = function() {
+            loadEloSystem();
             setLanguage(currentLang);
         };
 
@@ -1153,8 +1154,10 @@
             document.getElementById('playerEloLabel').innerText = playerElo;
             document.getElementById('gamePlayerElo').innerText = `Elo: ${playerElo}`;
             
-            let rank = "";
             const dict = i18n[currentLang];
+            document.getElementById('gamePlayerLabel').innerText = `${dict.statYou} (${currentLang === 'vi' ? 'Quân Trắng' : 'White'})`;
+
+            let rank = "";
             if (playerElo >= 100 && playerElo <= 599) {
                 rank = dict.rank_1;
             } else if (playerElo >= 600 && playerElo <= 1599) {
@@ -1256,7 +1259,7 @@
                         cell.classList.add('sq-selected');
                     }
 
-                    // CRITICAL UPDATE: Highlighting checked King square in bright red and pulsing it!
+                    // Highlighting checked King square in bright red and pulsing it!
                     if (checkedKingSquare === squareId) {
                         cell.className = "w-full h-full flex items-center justify-center relative cursor-pointer transition-all duration-150 bg-red-600/80 animate-pulse border-2 border-red-500 z-20";
                     }
@@ -1782,7 +1785,7 @@
                 const winMsgs = [dict.win_msg_1, dict.win_msg_2, dict.win_msg_3];
                 encouragementMsg = winMsgs[Math.floor(Math.random() * winMsgs.length)];
 
-                localStorage.setItem('chess_flash_elo', playerElo);
+                savePlayerElo();
                 playChessSound('win');
                 triggerVictoryFireworks();
             } 
@@ -1799,7 +1802,7 @@
                 const loseMsgs = [dict.loss_msg_1, dict.loss_msg_2, dict.loss_msg_3];
                 encouragementMsg = loseMsgs[Math.floor(Math.random() * loseMsgs.length)];
 
-                localStorage.setItem('chess_flash_elo', playerElo);
+                savePlayerElo();
             } 
             else if (outcome === 'draw') {
                 eloDiff = 0; 
