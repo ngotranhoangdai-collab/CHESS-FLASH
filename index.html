@@ -20,8 +20,11 @@
             overscroll-behavior: none;
         }
         .title-glow {
-            font-family: 'Playfair Display', serif;
+            font-family: Arial, sans-serif;
             text-shadow: 0 0 10px rgba(16, 185, 129, 0.6), 0 0 20px rgba(16, 185, 129, 0.4);
+        }
+        .font-arial {
+            font-family: Arial, Helvetica, sans-serif !important;
         }
         /* Custom scrollbar for game history */
         .custom-scrollbar::-webkit-scrollbar {
@@ -92,7 +95,7 @@
         }
         .unicode-black {
             color: #1e293b;
-            text-shadow: -1.5px -1.5px 0 #ffffff, 1.5px -1.5px 0 #ffffff, -1.5px 1.5px 0 #ffffff, 1.5px 1.5px 0 #ffffff, 0 0 5px rgba(255,255,255,0.5);
+            text-shadow: -1.5px -1.5px 0 #ffffff, 1.5px -1.5px 0 #ffffff, -1.5px 1.5px 0 #ffffff, -1.5px 1.5px 0 #ffffff, 0 0 5px rgba(255,255,255,0.5);
         }
     </style>
 </head>
@@ -109,7 +112,7 @@
                 <div id="topTitleTag" class="inline-block bg-emerald-500/10 text-emerald-400 text-xs px-3 py-1 rounded-full font-semibold tracking-wider uppercase mb-2 border border-emerald-500/20">
                     <i class="fa-solid fa-bolt mr-1"></i> Trò chơi Cờ Vua Thế Hệ Mới
                 </div>
-                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight title-glow text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight title-glow text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 font-arial">
                     CHESS FLASH
                 </h1>
                 <p id="topSubtitle" class="text-slate-400 text-sm md:text-base">Đối đầu AI thông minh - Thách thức giới hạn kỳ nghệ</p>
@@ -212,16 +215,26 @@
                 </div>
             </div>
 
-            <div class="w-full max-w-md flex flex-col items-center">
-                <button id="playBtn" onclick="showSetupModal()" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 text-lg font-bold rounded-xl shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/25 active:scale-[0.98] transition-all transform flex items-center justify-center space-x-3">
-                    <i class="fa-solid fa-play text-xl"></i>
-                    <span id="playBtnText">CHƠI NGAY</span>
-                </button>
-                <div class="text-xs text-slate-500 mt-4 tracking-wider font-semibold hover:text-emerald-400 transition-colors duration-300 cursor-default select-none text-center">
-                    © Bản Quyền Thuộc Đại Cờ Vua
+            <div class="w-full max-w-md flex flex-col items-center space-y-4">
+                <!-- Dual Buttons Container (Side-by-side) -->
+                <div class="grid grid-cols-2 gap-4 w-full">
+                    <!-- Left: CHƠI NGAY (AI Mode) -->
+                    <button id="playBtn" onclick="initiateGameMode('ai')" class="py-3 px-1.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 text-xs md:text-sm font-bold rounded-xl shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/25 active:scale-[0.98] transition-all transform flex items-center justify-center space-x-1.5">
+                        <i class="fa-solid fa-play text-sm md:text-base"></i>
+                        <span id="playBtnText">CHƠI NGAY</span>
+                    </button>
+                    <!-- Right: Chơi trên cùng màn hình (Yellow Glossy Glass Button Style) -->
+                    <button id="playLocalBtn" onclick="initiateGameMode('local')" class="py-3 px-1.5 bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/30 shadow-[0_0_15px_rgba(234,179,8,0.15)] hover:shadow-[0_0_20px_rgba(234,179,8,0.3)] backdrop-blur-md text-xs md:text-sm font-bold rounded-xl active:scale-[0.98] transition-all transform flex items-center justify-center space-x-1.5">
+                        <i class="fa-solid fa-users text-sm md:text-base"></i>
+                        <span id="playLocalBtnText">Chơi trên cùng màn hình</span>
+                    </button>
                 </div>
-                <a href="https://youtube.com/@dai_co_vua" target="_blank" class="text-xs text-red-400 hover:text-red-300 mt-2 transition duration-200 flex items-center gap-1.5 font-semibold bg-red-500/10 px-3 py-1.5 rounded-lg border border-red-500/20 hover:border-red-500/40 shadow-sm">
-                    <i class="fa-brands fa-youtube text-red-500 text-base"></i> Đại Cờ Vua
+                
+                <div class="text-xs text-slate-500 mt-4 tracking-wider font-semibold hover:text-emerald-400 transition-colors duration-300 cursor-default select-none text-center">
+                    © Bản Quyền Thuộc HoangDaiRBLX
+                </div>
+                <a href="https://youtube.com/@hoangdairblx" target="_blank" class="text-xs text-red-400 hover:text-red-300 mt-2 transition duration-200 flex items-center gap-1.5 font-semibold bg-red-500/10 px-3 py-1.5 rounded-lg border border-red-500/20 hover:border-red-500/40 shadow-sm">
+                    <i class="fa-brands fa-youtube text-red-500 text-base"></i> HoangDaiRBLX
                 </a>
             </div>
         </div>
@@ -235,7 +248,7 @@
                         <i class="fa-solid fa-arrow-left"></i> <span>Trở về</span>
                     </button>
                     <span class="text-slate-500">|</span>
-                    <h2 class="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 tracking-tight flex items-center">
+                    <h2 class="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 tracking-tight flex items-center font-arial">
                         <i class="fa-solid fa-chess mr-2"></i> CHESS FLASH
                     </h2>
                 </div>
@@ -273,8 +286,8 @@
                                 <i class="fa-solid fa-robot"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-sm text-slate-200">STOCKFISH v1.0</h4>
-                                <p class="text-[10px] text-slate-400"><span id="matchEloSim">Hệ số mô phỏng:</span> <span id="opponentEloLabel">1150</span> Elo</p>
+                                <h4 class="font-bold text-sm text-slate-200" id="opponentNameLabel">STOCKFISH v1.0</h4>
+                                <p class="text-[10px] text-slate-400" id="opponentSimScore"><span id="matchEloSim">Hệ số mô phỏng:</span> <span id="opponentEloLabel">1150</span> Elo</p>
                             </div>
                         </div>
                         
@@ -318,16 +331,31 @@
                     </div>
 
                     <!-- Action Controls -->
-                    <div class="w-full max-w-[420px] md:max-w-[480px] grid grid-cols-2 gap-3 pt-2">
+                    <div class="w-full max-w-[420px] md:max-w-[480px] grid grid-cols-3 gap-2 pt-2 items-stretch">
                         <!-- Resign button -->
-                        <button id="resignBtn" onclick="showResignConfirm()" class="py-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 hover:border-red-500/40 rounded-xl font-bold text-sm transition-all transform active:scale-95 flex items-center justify-center space-x-2">
-                            <i class="fa-solid fa-flag"></i>
-                            <span id="resignBtnText">Chấp Nhận Thua</span>
+                        <button id="resignBtn" onclick="showResignConfirm()" class="h-full py-3 px-1 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 hover:border-red-500/40 rounded-xl font-bold text-xs md:text-sm transition-all transform active:scale-95 flex flex-col items-center justify-center gap-1">
+                            <i class="fa-solid fa-flag text-base"></i>
+                            <span id="resignBtnText">Đầu hàng</span>
                         </button>
+                        
+                        <!-- Middle Column: Board Rotation & Auto Rotation options -->
+                        <div class="flex flex-col gap-1.5 h-full justify-between">
+                            <!-- Rotate board button -->
+                            <button id="rotateBoardBtn" onclick="toggleBoardRotation()" class="flex-1 py-1.5 px-1 bg-slate-850 hover:bg-slate-800 text-teal-400 border border-slate-700/50 rounded-xl font-bold text-xs md:text-sm transition-all transform active:scale-95 flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-arrows-rotate animate-spin" style="animation-duration: 15s"></i>
+                                <span id="rotateBtnText">Xoay bàn</span>
+                            </button>
+                            <!-- Auto Rotate toggle button (Underneath Rotate Board) -->
+                            <button id="autoRotateBtn" onclick="toggleAutoRotate()" class="flex-1 py-1 px-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl font-bold text-[10px] md:text-xs transition-all transform active:scale-95 flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-toggle-on"></i>
+                                <span id="autoRotateBtnText">Tự xoay: BẬT</span>
+                            </button>
+                        </div>
+                        
                         <!-- Undo Move button -->
-                        <button id="undoMoveBtn" onclick="handleUndoRequest()" class="py-3 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 border border-slate-700/50 rounded-xl font-bold text-sm transition-all transform active:scale-95 flex items-center justify-center space-x-2 disabled:opacity-40 disabled:cursor-not-allowed">
-                            <i class="fa-solid fa-rotate-left"></i>
-                            <span id="undoBtnText">Hoàn Tác Nước Đi</span>
+                        <button id="undoMoveBtn" onclick="handleUndoRequest()" class="h-full py-3 px-1 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 border border-slate-700/50 rounded-xl font-bold text-xs md:text-sm transition-all transform active:scale-95 flex flex-col items-center justify-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed">
+                            <i class="fa-solid fa-rotate-left text-base"></i>
+                            <span id="undoBtnText">Hoàn tác</span>
                         </button>
                     </div>
                 </div>
@@ -385,7 +413,6 @@
             </div>
         </div>
 
-
         <!-- ================= MODALS & POPUPS ================= -->
 
         <!-- PRE-GAME SETUP DIALOG MODAL -->
@@ -408,7 +435,10 @@
                             <p class="text-[10px] text-amber-400 font-bold uppercase mb-1.5 tracking-wide"><i class="fa-solid fa-fire mr-1"></i> Cờ Siêu Đạn & Cờ Đạn</p>
                             <div class="flex flex-wrap gap-2">
                                 <button onclick="selectTimeOption(15, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
-                                    CỜ SIÊU ĐẠN: 1/4 Giây (15s)
+                                    CỜ SIÊU ĐẠN: 15s
+                                </button>
+                                <button onclick="selectTimeOption(20, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
+                                    CỜ SIÊU ĐẠN: 20s
                                 </button>
                                 <button onclick="selectTimeOption(60, this)" class="time-opt-btn px-3 py-1.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-lg text-xs transition duration-200 border border-slate-700/50">
                                     CỜ ĐẠN: 1 Phút
@@ -580,7 +610,7 @@
                 </div>
 
                 <!-- Elo delta dashboard -->
-                <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 w-full mb-6 flex justify-around">
+                <div id="eloDashboardContainer" class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 w-full mb-6 flex justify-around">
                     <div>
                         <p id="resultEloTitle" class="text-slate-400 text-xs uppercase tracking-wider">Hệ số ELO mới</p>
                         <p id="resultNewElo" class="text-2xl font-bold text-amber-400">100</p>
@@ -876,6 +906,9 @@
         let activeLegalMoves = [];
         let undoHistory = []; // Stack to support custom undos
         let currentLang = 'vi'; // Default Vietnamese
+        let isBoardFlipped = false; // Support board rotation perspective
+        let gameMode = 'ai'; // 'ai' or 'local'
+        let isAutoRotateEnabled = true; // Auto-rotate active player's turn on same screen
 
         // Setup clock variables
         let selectedSeconds = 300; // Default: Blitz 5 minutes
@@ -909,14 +942,18 @@
                 moveStyleBoth: "Cả Hai",
                 aiLabel: "Cấp độ Robot (Stockfish)",
                 playBtnText: "CHƠI NGAY",
+                playLocalBtnText: "Chơi trên cùng màn hình",
                 returnBtn: "Trở về",
                 matchOpponentName: "Đấu với Robot",
                 aiStatusText_init: "Đang chờ bạn đi quân...",
                 statYou: "Bạn",
                 matchEloSim: "Hệ số mô phỏng:",
                 aiThinkingText: "Đang tính toán...",
-                resignBtnText: "Chấp Nhận Thua",
-                undoBtnText: "Hoàn Tác Nước Đi",
+                resignBtnText: "Đầu hàng",
+                rotateBtnText: "Xoay bàn",
+                autoRotateOn: "Tự xoay: BẬT",
+                autoRotateOff: "Tự xoay: TẮT",
+                undoBtnText: "Hoàn tác",
                 gamePlayerLabel: "Bạn (Quân Trắng)",
                 playerIndicator: "Lượt Của Bạn",
                 historyHeader: "LỊCH SỬ NƯỚC ĐI",
@@ -1018,14 +1055,18 @@
                 moveStyleBoth: "Both",
                 aiLabel: "Robot Level (Stockfish)",
                 playBtnText: "PLAY NOW",
+                playLocalBtnText: "Play on Same Screen",
                 returnBtn: "Return",
                 matchOpponentName: "Opponent: Robot",
                 aiStatusText_init: "Waiting for your move...",
                 statYou: "You",
                 matchEloSim: "Simulated rating:",
                 aiThinkingText: "Calculating...",
-                resignBtnText: "Resign Game",
-                undoBtnText: "Undo Move",
+                resignBtnText: "Resign",
+                rotateBtnText: "Flip board",
+                autoRotateOn: "Auto: ON",
+                autoRotateOff: "Auto: OFF",
+                undoBtnText: "Undo",
                 gamePlayerLabel: "You (White)",
                 playerIndicator: "Your Turn",
                 historyHeader: "MOVE HISTORY",
@@ -1248,6 +1289,7 @@
             document.getElementById('moveStyleSub').innerText = dict.moveStyleSub;
             document.getElementById('aiLabel').innerText = dict.aiLabel;
             document.getElementById('playBtnText').innerText = dict.playBtnText;
+            document.getElementById('playLocalBtnText').innerText = dict.playLocalBtnText;
 
             // Piece Buttons
             document.getElementById('pieceNormalBtn').innerText = dict.pieceNormal;
@@ -1272,14 +1314,17 @@
                 soundText.innerText = dict.soundOff;
             }
 
-            // Game Screen
+            // Game Screen Action Labels
             document.getElementById('returnBtn').innerHTML = `<i class="fa-solid fa-arrow-left"></i> ` + dict.returnBtn;
             document.getElementById('matchOpponentName').innerText = dict.matchOpponentName;
             document.getElementById('statYou').innerText = dict.statYou;
             document.getElementById('matchEloSim').innerText = dict.matchEloSim;
             document.getElementById('aiThinkingText').innerText = dict.aiThinkingText;
+            
             document.getElementById('resignBtnText').innerText = dict.resignBtnText;
+            document.getElementById('rotateBtnText').innerText = dict.rotateBtnText;
             document.getElementById('undoBtnText').innerText = dict.undoBtnText;
+            
             document.getElementById('gamePlayerLabel').innerText = dict.gamePlayerLabel;
             document.getElementById('playerIndicator').innerText = dict.playerIndicator;
             document.getElementById('historyHeader').innerText = dict.historyHeader;
@@ -1438,6 +1483,11 @@
         }
 
         /* ---------------- PRE-GAME CONFIGURATION POPUP ---------------- */
+        function initiateGameMode(mode) {
+            gameMode = mode;
+            showSetupModal();
+        }
+
         function showSetupModal() {
             document.getElementById('gameSetupModal').classList.remove('hidden');
         }
@@ -1540,9 +1590,8 @@
             undoHistory = [];
             selectedSquare = null;
             activeLegalMoves = [];
+            isBoardFlipped = false; // Reset board perspective on new game
             
-            document.getElementById('opponentEloLabel').innerText = robotElo;
-            document.getElementById('robotLevelBadge').innerText = `${currentLang === 'vi' ? 'Cấp' : 'Lvl'} ${currentLevel}`;
             updateEloDisplayOnMenus();
 
             // Reset Clock variables
@@ -1559,15 +1608,41 @@
 
             const undoBtn = document.getElementById('undoMoveBtn');
             const dict = i18n[currentLang];
-            if (currentLevel >= 5) {
-                undoBtn.disabled = true;
-                undoBtn.title = dict.undo_lock_warning;
-            } else {
-                undoBtn.disabled = false;
-                undoBtn.title = currentLang === 'vi' ? "Nhấp để hoàn tác nước đi vừa rồi" : "Click to undo the last move";
-            }
+            
+            // Local 2 player customizations vs AI customizations
+            if (gameMode === 'local') {
+                document.getElementById('opponentNameLabel').innerText = currentLang === 'vi' ? "BÊN ĐEN" : "BLACK SIDE";
+                document.getElementById('opponentSimScore').classList.add('hidden');
+                document.getElementById('robotLevelBadge').classList.add('hidden');
+                document.getElementById('matchOpponentName').innerText = currentLang === 'vi' ? "Chơi cùng màn hình" : "Same Screen Match";
+                document.getElementById('aiStatusText').innerText = currentLang === 'vi' ? "Lượt của bên Trắng..." : "White's turn...";
+                undoBtn.disabled = false; 
+                undoBtn.title = "";
 
-            document.getElementById('aiStatusText').innerText = dict.aiStatusText_init;
+                // Display Auto-Rotate option when playing on same screen (ON by default)
+                isAutoRotateEnabled = true;
+                document.getElementById('autoRotateBtn').classList.remove('hidden');
+                updateAutoRotateUI();
+            } else {
+                document.getElementById('opponentNameLabel').innerText = "STOCKFISH v1.0";
+                document.getElementById('opponentSimScore').classList.remove('hidden');
+                document.getElementById('robotLevelBadge').classList.remove('hidden');
+                document.getElementById('opponentEloLabel').innerText = robotElo;
+                document.getElementById('robotLevelBadge').innerText = `${currentLang === 'vi' ? 'Cấp' : 'Lvl'} ${currentLevel}`;
+                document.getElementById('matchOpponentName').innerText = dict.matchOpponentName;
+                document.getElementById('aiStatusText').innerText = dict.aiStatusText_init;
+                
+                if (currentLevel >= 5) {
+                    undoBtn.disabled = true;
+                    undoBtn.title = dict.undo_lock_warning;
+                } else {
+                    undoBtn.disabled = false;
+                    undoBtn.title = currentLang === 'vi' ? "Nhấp để hoàn tác nước đi vừa rồi" : "Click to undo the last move";
+                }
+
+                // Hide Auto-Rotate option for single-player mode
+                document.getElementById('autoRotateBtn').classList.add('hidden');
+            }
 
             // Start clock countdown
             startClockTimer();
@@ -1593,7 +1668,6 @@
             if (timerInterval) clearInterval(timerInterval);
 
             if (selectedSeconds === -1) {
-                // Do not run countdown
                 return;
             }
 
@@ -1618,7 +1692,7 @@
                         blackTimeLeft = 0;
                         updateClockDisplays();
                         clearInterval(timerInterval);
-                        processGameTimeOut('b'); // Black (Robot) lost on time
+                        processGameTimeOut('b'); // Black lost on time
                     }
                 }
                 updateClockDisplays();
@@ -1627,14 +1701,21 @@
 
         function processGameTimeOut(losingSide) {
             const dict = i18n[currentLang];
-            if (losingSide === 'w') {
-                // You lost on time
-                processGameTermination('loss');
-                document.getElementById('resultDesc').innerText = dict.loss_time_forfeit;
+            if (gameMode === 'ai') {
+                if (losingSide === 'w') {
+                    processGameTermination('loss');
+                    document.getElementById('resultDesc').innerText = dict.loss_time_forfeit;
+                } else {
+                    processGameTermination('win');
+                    document.getElementById('resultDesc').innerText = dict.win_time_forfeit;
+                }
             } else {
-                // Robot lost on time
-                processGameTermination('win');
-                document.getElementById('resultDesc').innerText = dict.win_time_forfeit;
+                // Local mode timeouts
+                if (losingSide === 'w') {
+                    processGameTermination('loss'); // White lost, so Black wins
+                } else {
+                    processGameTermination('win'); // Black lost, so White wins
+                }
             }
         }
     </script>
@@ -1656,6 +1737,46 @@
                 }
             }
             return null;
+        }
+
+        // Toggle board perspective rotation (flipped board)
+        function toggleBoardRotation() {
+            isBoardFlipped = !isBoardFlipped;
+            playChessSound('move');
+            renderBoard();
+        }
+
+        // Toggle Auto-rotation settings (local mode only)
+        function toggleAutoRotate() {
+            isAutoRotateEnabled = !isAutoRotateEnabled;
+            playChessSound('move');
+            updateAutoRotateUI();
+            
+            // Automatically flip matching current turn if active
+            if (gameMode === 'local') {
+                if (isAutoRotateEnabled) {
+                    isBoardFlipped = (game.turn() === 'b');
+                }
+                renderBoard();
+            }
+        }
+
+        // Update Auto-Rotate Toggle button styling
+        function updateAutoRotateUI() {
+            const btn = document.getElementById('autoRotateBtn');
+            const textSpan = document.getElementById('autoRotateBtnText');
+            const icon = btn.querySelector('i');
+            const dict = i18n[currentLang];
+
+            if (isAutoRotateEnabled) {
+                textSpan.innerText = dict.autoRotateOn;
+                icon.className = "fa-solid fa-toggle-on text-sm";
+                btn.className = "flex-1 py-1 px-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl font-bold text-[10px] md:text-xs transition-all transform active:scale-95 flex items-center justify-center gap-1";
+            } else {
+                textSpan.innerText = dict.autoRotateOff;
+                icon.className = "fa-solid fa-toggle-off text-sm";
+                btn.className = "flex-1 py-1 px-1 bg-slate-800 text-slate-500 border border-slate-700/50 rounded-xl font-bold text-[10px] md:text-xs transition-all transform active:scale-95 flex items-center justify-center gap-1";
+            }
         }
 
         // Lightweight highlighting that does NOT destroy dragged DOM element
@@ -1696,9 +1817,14 @@
             const inCheck = game.in_check();
             const checkedKingSquare = inCheck ? findKingSquare(game.turn()) : null;
 
-            // Render square structures (White perspective: Rank 8 down to 1)
-            for (let r = 7; r >= 0; r--) {
-                for (let c = 0; c < 8; c++) {
+            // Determine render directions based on flipped state
+            const rankIndices = isBoardFlipped ? Array.from({length: 8}, (_, i) => i) : Array.from({length: 8}, (_, i) => 7 - i);
+            const colIndices = isBoardFlipped ? Array.from({length: 8}, (_, i) => 7 - i) : Array.from({length: 8}, (_, i) => i);
+
+            for (let rIndex = 0; rIndex < 8; rIndex++) {
+                const r = rankIndices[rIndex];
+                for (let cIndex = 0; cIndex < 8; cIndex++) {
+                    const c = colIndices[cIndex];
                     const squareId = colMapping[c] + (r + 1);
                     const squareClass = (r + c) % 2 === 1 ? 'sq-light' : 'sq-dark';
                     
@@ -1741,14 +1867,17 @@
                             pEl.innerHTML = `<span class="text-piece ${sideClass} text-2xl font-extrabold select-none">${letter}</span>`;
                         }
 
-                        // Attach drag event listeners if allowed (White pieces on player turn)
-                        if (game.turn() === 'w' && piece.color === 'w' && (moveStyle === 'drag' || moveStyle === 'both')) {
+                        // Check if it's the current player's turn to drag pieces
+                        const isPlayersTurn = (gameMode === 'ai' && game.turn() === 'w' && piece.color === 'w') || 
+                                              (gameMode === 'local' && piece.color === game.turn());
+
+                        if (isPlayersTurn && (moveStyle === 'drag' || moveStyle === 'both')) {
                             pEl.setAttribute('draggable', 'true');
                             
                             pEl.addEventListener('dragstart', (e) => {
                                 selectedSquare = squareId;
                                 activeLegalMoves = game.moves({ square: squareId, verbose: true });
-                                highlightMoves(activeLegalMoves); // Avoid full rendering which cancels dragging
+                                highlightMoves(activeLegalMoves); 
                                 e.dataTransfer.setData("text/plain", squareId);
                             });
                         } else {
@@ -1761,7 +1890,7 @@
                     // Attach drop zone event listeners to every board cell
                     if (moveStyle === 'drag' || moveStyle === 'both') {
                         cell.addEventListener('dragover', (e) => {
-                            e.preventDefault(); // Necessary to allow drop
+                            e.preventDefault(); 
                         });
 
                         cell.addEventListener('drop', (e) => {
@@ -1784,7 +1913,6 @@
                                     return;
                                 }
                             }
-                            // Reset state if dropped on invalid spot
                             selectedSquare = null;
                             activeLegalMoves = [];
                             renderBoard();
@@ -1801,7 +1929,6 @@
 
         // Calculates remaining piece points and tracks all captured pieces
         function updateCapturedPiecesPanel() {
-            // Count current active pieces
             const initialSet = {
                 w: { q: 1, r: 2, b: 2, n: 2, p: 8 },
                 b: { q: 1, r: 2, b: 2, n: 2, p: 8 }
@@ -1831,9 +1958,8 @@
                 }
             }
 
-            // Calculate exact captured lists
-            const capturedByBlack = []; // White pieces captured by opponent
-            const capturedByWhite = []; // Black pieces captured by you
+            const capturedByBlack = []; 
+            const capturedByWhite = []; 
 
             const pieceOrder = ['q', 'r', 'b', 'n', 'p'];
 
@@ -1849,11 +1975,9 @@
                 }
             });
 
-            // Render lists
             renderCapturedDOM('opponentCapturedPieces', capturedByBlack);
             renderCapturedDOM('playerCapturedPieces', capturedByWhite);
 
-            // Calculate material advantage
             const opponentAdvantageEl = document.getElementById('opponentMaterialAdvantage');
             const playerAdvantageEl = document.getElementById('playerMaterialAdvantage');
 
@@ -1896,13 +2020,14 @@
             // Only allow click interactions if mode is 'click' or 'both'
             if (moveStyle === 'drag') return;
 
-            // Only allow interactions on Player's turn (White)
-            if (game.turn() !== 'w') return;
-
+            const turn = game.turn();
             const piece = game.get(squareId);
 
-            // Select or change piece selection
-            if (piece && piece.color === 'w') {
+            // In AI Mode, player only controls White. In Local Mode, players control both turns.
+            const isSelectable = (gameMode === 'ai' && piece && piece.color === 'w') || 
+                                 (gameMode === 'local' && piece && piece.color === turn);
+
+            if (isSelectable) {
                 selectedSquare = squareId;
                 activeLegalMoves = game.moves({ square: squareId, verbose: true });
                 playChessSound('move');
@@ -1910,7 +2035,7 @@
                 return;
             }
 
-            // Player tries to move the selected piece
+            // Move Selected Piece
             if (selectedSquare) {
                 const moveAttempt = activeLegalMoves.find(m => m.to === squareId);
                 
@@ -1950,33 +2075,57 @@
 
                 selectedSquare = null;
                 activeLegalMoves = [];
+
+                // Handle auto-rotate in local match mode to face active side
+                if (gameMode === 'local' && isAutoRotateEnabled) {
+                    isBoardFlipped = (game.turn() === 'b');
+                }
+
                 renderBoard();
                 updateHistoryUI();
 
                 if (checkGameStatus()) return;
 
-                // Let Robot play after small natural delay
-                document.getElementById('aiThinkingLoader').classList.remove('hidden');
-                document.getElementById('aiThinkingLoader').classList.add('flex');
-                document.getElementById('playerIndicator').classList.add('hidden');
-                document.getElementById('aiStatusText').innerText = dict.ai_thinking_state;
+                if (gameMode === 'ai') {
+                    // Let Robot play after small natural delay
+                    document.getElementById('aiThinkingLoader').classList.remove('hidden');
+                    document.getElementById('aiThinkingLoader').classList.add('flex');
+                    document.getElementById('playerIndicator').classList.add('hidden');
+                    document.getElementById('aiStatusText').innerText = dict.ai_thinking_state;
 
-                setTimeout(triggerAIMove, 250);
+                    // Compute dynamic latency (Exclude Hyperbullet: 15s and 20s, and Unlimited)
+                    let delay = 250;
+                    if (selectedSeconds !== 15 && selectedSeconds !== 20 && selectedSeconds !== -1) {
+                        delay = Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000;
+                    }
+
+                    setTimeout(triggerAIMove, delay);
+                } else {
+                    // Update current turn indicators for local play
+                    const currentTurn = game.turn();
+                    if (currentTurn === 'w') {
+                        document.getElementById('aiStatusText').innerText = currentLang === 'vi' ? "Lượt của bên Trắng..." : "White's turn...";
+                    } else {
+                        document.getElementById('aiStatusText').innerText = currentLang === 'vi' ? "Lượt của bên Đen..." : "Black's turn...";
+                    }
+                }
             }
         }
 
         function showPromotionModal() {
-            // Render promo buttons based on selected piece style
             const promoPieces = ['q', 'r', 'b', 'n'];
+            const turn = game.turn();
             
             promoPieces.forEach(p => {
                 const btnSvg = document.getElementById(`promo-${p}-svg`);
                 if (userPieceStyle === 'normal') {
-                    const symbol = getUnicodePiece('w', p);
-                    btnSvg.innerHTML = `<span class="unicode-piece unicode-white text-3xl select-none">${symbol}</span>`;
+                    const symbol = getUnicodePiece(turn, p);
+                    const colorClass = turn === 'w' ? 'unicode-white' : 'unicode-black';
+                    btnSvg.innerHTML = `<span class="unicode-piece ${colorClass} text-3xl select-none">${symbol}</span>`;
                 } else {
                     const letter = pieceTextMap[p];
-                    btnSvg.innerHTML = `<span class="text-piece piece-white text-xl font-extrabold select-none">${letter}</span>`;
+                    const colorClass = turn === 'w' ? 'piece-white' : 'piece-black';
+                    btnSvg.innerHTML = `<span class="text-piece ${colorClass} text-xl font-extrabold select-none">${letter}</span>`;
                 }
             });
             
@@ -2006,7 +2155,7 @@
 
         function handleUndoRequest() {
             const dict = i18n[currentLang];
-            if (currentLevel >= 5) {
+            if (gameMode === 'ai' && currentLevel >= 5) {
                 showSimpleNotify(dict.undo_lock_warning);
                 return;
             }
@@ -2016,7 +2165,6 @@
                 return;
             }
 
-            // Pop last state
             const lastState = undoHistory.pop();
             game.load(lastState.fen);
             whiteTimeLeft = lastState.whiteTime;
@@ -2026,27 +2174,58 @@
             selectedSquare = null;
             activeLegalMoves = [];
             
+            // Adjust perspective back to previous state during undo if auto-rotate is enabled
+            if (gameMode === 'local' && isAutoRotateEnabled) {
+                isBoardFlipped = (game.turn() === 'b');
+            }
+
             renderBoard();
             updateHistoryUI();
             
-            document.getElementById('playerIndicator').classList.remove('hidden');
-            document.getElementById('aiStatusText').innerText = dict.ai_moved_state;
+            if (gameMode === 'ai') {
+                document.getElementById('playerIndicator').classList.remove('hidden');
+                document.getElementById('aiStatusText').innerText = dict.ai_moved_state;
+            } else {
+                const currentTurn = game.turn();
+                if (currentTurn === 'w') {
+                    document.getElementById('aiStatusText').innerText = currentLang === 'vi' ? "Lượt của bên Trắng..." : "White's turn...";
+                } else {
+                    document.getElementById('aiStatusText').innerText = currentLang === 'vi' ? "Lượt của bên Đen..." : "Black's turn...";
+                }
+            }
             playChessSound('move');
         }
 
         function showResignConfirm() {
             const dict = i18n[currentLang];
-            document.getElementById('confirmTitle').innerText = dict.resign_confirm_title;
-            document.getElementById('confirmMsg').innerText = dict.resign_confirm_msg;
-            document.getElementById('confirmCancelBtn').innerText = dict.confirmCancel;
+            const totalMoves = game.history().length;
             
-            const btn = document.getElementById('confirmExecuteBtn');
-            btn.innerText = dict.confirmAgree;
-            btn.className = "flex-1 py-2.5 bg-red-600 hover:bg-red-500 text-white font-semibold rounded-xl text-sm transition";
-            btn.onclick = () => {
-                closeConfirmModal();
-                processGameTermination('loss');
-            };
+            if (totalMoves <= 1) {
+                document.getElementById('confirmTitle').innerText = currentLang === 'vi' ? "Hủy Ván Đấu & Trở Về?" : "Abort Game & Return?";
+                document.getElementById('confirmMsg').innerText = currentLang === 'vi' ? "Ván cờ chưa đủ số nước đi tối thiểu nên sẽ bị hủy bỏ và KHÔNG bị trừ điểm Elo. Bạn có muốn trở về?" : "The match hasn't reached minimum moves, so it will be aborted with NO Elo deduction. Do you want to return?";
+                document.getElementById('confirmCancelBtn').innerText = dict.confirmCancel;
+                
+                const btn = document.getElementById('confirmExecuteBtn');
+                btn.innerText = dict.confirmAgree;
+                btn.className = "flex-1 py-2.5 bg-slate-600 hover:bg-slate-500 text-white font-semibold rounded-xl text-sm transition";
+                btn.onclick = () => {
+                    closeConfirmModal();
+                    processGameTermination('abort'); 
+                };
+            } else {
+                // Normal Resignation
+                document.getElementById('confirmTitle').innerText = dict.resign_confirm_title;
+                document.getElementById('confirmMsg').innerText = dict.resign_confirm_msg;
+                document.getElementById('confirmCancelBtn').innerText = dict.confirmCancel;
+                
+                const btn = document.getElementById('confirmExecuteBtn');
+                btn.innerText = dict.confirmAgree;
+                btn.className = "flex-1 py-2.5 bg-red-600 hover:bg-red-500 text-white font-semibold rounded-xl text-sm transition";
+                btn.onclick = () => {
+                    closeConfirmModal();
+                    processGameTermination('loss');
+                };
+            }
 
             document.getElementById('confirmModal').classList.remove('hidden');
         }
@@ -2179,7 +2358,6 @@
                 bestMove = getAlphaBetaMove(4);
             }
             else {
-                // Level 10
                 bestMove = getAlphaBetaMove(4);
             }
 
@@ -2329,9 +2507,9 @@
         function checkGameStatus() {
             if (game.in_checkmate()) {
                 if (game.turn() === 'w') {
-                    processGameTermination('loss');
+                    processGameTermination('loss'); // Black wins, White loses
                 } else {
-                    processGameTermination('win');
+                    processGameTermination('win'); // White wins, Black loses
                 }
                 return true;
             }
@@ -2355,6 +2533,11 @@
         function processGameTermination(outcome, drawType = 'generic') {
             if (timerInterval) clearInterval(timerInterval); // Stop clock instantly
 
+            // FORCE EXTREME ABORT SAFEGUARD:
+            if (outcome === 'loss' && game.history().length <= 1) {
+                outcome = 'abort';
+            }
+
             let eloDiff = 0;
             let resultTitle = "";
             let resultDesc = "";
@@ -2366,66 +2549,127 @@
             document.getElementById('handshakeEffectContainer').classList.add('hidden');
             const dict = i18n[currentLang];
 
-            if (outcome === 'win') {
-                eloDiff = 15 + (currentLevel * 2);
-                playerElo = playerElo + eloDiff;
-                if (playerElo > 2900) playerElo = 2900; 
-                
-                resultTitle = dict.win_title;
-                resultDesc = dict.win_desc.replace('{level}', currentLevel);
-                iconClass = "fa-solid fa-trophy text-amber-400";
-                iconColor = "bg-amber-500/10 border-amber-500/20";
-                
-                const winMsgs = [dict.win_msg_1, dict.win_msg_2, dict.win_msg_3];
-                encouragementMsg = winMsgs[Math.floor(Math.random() * winMsgs.length)];
+            // Setup dashboard visibility
+            const eloDashboard = document.getElementById('eloDashboardContainer');
+            const encouragementEl = document.getElementById('resultEncouragement');
+            const descEl = document.getElementById('resultDesc');
 
-                savePlayerElo();
-                playChessSound('win');
-                triggerVictoryFireworks();
-            } 
-            else if (outcome === 'loss') {
-                eloDiff = Math.max(-15, -(15 - currentLevel));
-                playerElo = playerElo + eloDiff;
-                if (playerElo < 100) playerElo = 100; 
-                
-                resultTitle = dict.loss_title;
-                resultDesc = dict.loss_desc.replace('{level}', currentLevel);
-                iconClass = "fa-solid fa-circle-xmark text-red-500";
-                iconColor = "bg-red-500/10 border-red-500/20";
-                
-                const loseMsgs = [dict.loss_msg_1, dict.loss_msg_2, dict.loss_msg_3];
-                encouragementMsg = loseMsgs[Math.floor(Math.random() * loseMsgs.length)];
+            if (gameMode === 'ai') {
+                eloDashboard.classList.remove('hidden');
+                encouragementEl.classList.remove('hidden');
+                descEl.classList.remove('hidden');
 
-                savePlayerElo();
-            } 
-            else if (outcome === 'draw') {
-                eloDiff = 0; 
-                resultTitle = dict.draw_title;
-                
-                if (drawType === 'stalemate') {
-                    resultDesc = dict.draw_stalemate;
-                } else if (drawType === 'repetition') {
-                    resultDesc = dict.draw_repetition;
-                } else if (drawType === 'insufficient') {
-                    resultDesc = dict.draw_insufficient;
-                } else {
-                    resultDesc = dict.draw_generic;
+                if (outcome === 'win') {
+                    eloDiff = 15 + (currentLevel * 2);
+                    playerElo = playerElo + eloDiff;
+                    if (playerElo > 2900) playerElo = 2900; 
+                    
+                    resultTitle = dict.win_title;
+                    resultDesc = dict.win_desc.replace('{level}', currentLevel);
+                    iconClass = "fa-solid fa-trophy text-amber-400";
+                    iconColor = "bg-amber-500/10 border-amber-500/20";
+                    
+                    const winMsgs = [dict.win_msg_1, dict.win_msg_2, dict.win_msg_3];
+                    encouragementMsg = winMsgs[Math.floor(Math.random() * winMsgs.length)];
+
+                    savePlayerElo();
+                    playChessSound('win');
+                } 
+                else if (outcome === 'loss') {
+                    eloDiff = Math.max(-15, -(15 - currentLevel));
+                    playerElo = playerElo + eloDiff;
+                    if (playerElo < 100) playerElo = 100; 
+                    
+                    resultTitle = dict.loss_title;
+                    resultDesc = dict.loss_desc.replace('{level}', currentLevel);
+                    iconClass = "fa-solid fa-circle-xmark text-red-500";
+                    iconColor = "bg-red-500/10 border-red-500/20";
+                    
+                    const loseMsgs = [dict.loss_msg_1, dict.loss_msg_2, dict.loss_msg_3];
+                    encouragementMsg = loseMsgs[Math.floor(Math.random() * loseMsgs.length)];
+
+                    savePlayerElo();
+                } 
+                else if (outcome === 'abort') {
+                    eloDiff = 0;
+                    resultTitle = currentLang === 'vi' ? "VÁN CỜ ĐÃ BỊ HỦY" : "GAME ABORTED";
+                    resultDesc = ""; 
+                    encouragementMsg = ""; 
+                    iconClass = "fa-solid fa-circle-minus text-slate-400";
+                    iconColor = "bg-slate-500/10 border-slate-500/20";
                 }
+                else if (outcome === 'draw') {
+                    eloDiff = 0; 
+                    resultTitle = dict.draw_title;
+                    
+                    if (drawType === 'stalemate') {
+                        resultDesc = dict.draw_stalemate;
+                    } else if (drawType === 'repetition') {
+                        resultDesc = dict.draw_repetition;
+                    } else if (drawType === 'insufficient') {
+                        resultDesc = dict.draw_insufficient;
+                    } else {
+                        resultDesc = dict.draw_generic;
+                    }
 
-                iconClass = "fa-solid fa-handshake text-emerald-400";
-                iconColor = "bg-emerald-500/10 border-emerald-500/20";
+                    iconClass = "fa-solid fa-handshake text-emerald-400";
+                    iconColor = "bg-emerald-500/10 border-emerald-500/20";
 
-                const drawMsgs = [dict.draw_msg_1, dict.draw_msg_2, dict.draw_msg_3];
-                encouragementMsg = drawMsgs[Math.floor(Math.random() * drawMsgs.length)];
+                    const drawMsgs = [dict.draw_msg_1, dict.draw_msg_2, dict.draw_msg_3];
+                    encouragementMsg = drawMsgs[Math.floor(Math.random() * drawMsgs.length)];
+                }
+            } else {
+                // LOCAL 2-PLAYER MODE:
+                eloDiff = 0;
+                eloDashboard.classList.add('hidden');
+                encouragementEl.classList.add('hidden');
+                descEl.classList.remove('hidden');
 
-                document.getElementById('handshakeEffectContainer').classList.remove('hidden');
+                if (outcome === 'win') {
+                    // White wins
+                    resultTitle = currentLang === 'vi' ? "BÊN TRẮNG THẮNG" : "WHITE WINS";
+                    resultDesc = currentLang === 'vi' ? "Bên Đen thua cuộc" : "Black side lost";
+                    iconClass = "fa-solid fa-trophy text-amber-400";
+                    iconColor = "bg-amber-500/10 border-amber-500/20";
+                    playChessSound('win');
+                } else if (outcome === 'loss') {
+                    // Black wins
+                    resultTitle = currentLang === 'vi' ? "BÊN ĐEN THẮNG" : "BLACK WINS";
+                    resultDesc = currentLang === 'vi' ? "Bên Trắng thua cuộc" : "White side lost";
+                    iconClass = "fa-solid fa-trophy text-amber-400";
+                    iconColor = "bg-amber-500/10 border-amber-500/20";
+                    playChessSound('win');
+                } else if (outcome === 'abort') {
+                    resultTitle = currentLang === 'vi' ? "VÁN CỜ ĐÃ BỊ HỦY" : "GAME ABORTED";
+                    resultDesc = "";
+                    iconClass = "fa-solid fa-circle-minus text-slate-400";
+                    iconColor = "bg-slate-500/10 border-slate-500/20";
+                } else if (outcome === 'draw') {
+                    resultTitle = currentLang === 'vi' ? "HÒA" : "DRAW";
+                    resultDesc = currentLang === 'vi' ? "Ván đấu kết thúc với tỉ số hòa" : "The game ended in a draw";
+                    iconClass = "fa-solid fa-handshake text-slate-400";
+                    iconColor = "bg-slate-500/10 border-slate-500/20";
+                    document.getElementById('handshakeEffectContainer').classList.remove('hidden');
+                }
             }
 
             document.getElementById('resultTitle').innerText = resultTitle;
-            document.getElementById('resultDesc').innerText = resultDesc;
             document.getElementById('resultNewElo').innerText = playerElo;
-            document.getElementById('resultEncouragement').innerText = encouragementMsg;
             
+            if (encouragementMsg === "") {
+                encouragementEl.classList.add('hidden'); 
+            } else if (gameMode === 'ai') {
+                encouragementEl.classList.remove('hidden');
+                encouragementEl.innerText = encouragementMsg;
+            }
+
+            if (resultDesc === "") {
+                descEl.classList.add('hidden'); 
+            } else {
+                descEl.classList.remove('hidden');
+                descEl.innerText = resultDesc;
+            }
+
             const diffEl = document.getElementById('resultEloDiff');
             if (eloDiff > 0) {
                 diffEl.innerText = `+${eloDiff}`;
@@ -2434,7 +2678,7 @@
                 diffEl.innerText = `${eloDiff}`;
                 diffEl.className = "text-2xl font-bold text-red-500";
             } else {
-                diffEl.innerText = currentLang === 'vi' ? "0 (Hòa)" : "0 (Draw)";
+                diffEl.innerText = currentLang === 'vi' ? "0 (Hủy)" : "0 (Aborted)";
                 diffEl.className = "text-2xl font-bold text-slate-400";
             }
 
@@ -2442,7 +2686,15 @@
             iconBox.className = `w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl border ${iconColor}`;
             iconBox.innerHTML = `<i class="${iconClass}"></i>`;
 
-            document.getElementById('resultModal').classList.remove('hidden');
+            // Wait 1 second before showing the result overlay modal
+            setTimeout(() => {
+                if (outcome === 'win' || (gameMode === 'local' && outcome === 'loss')) {
+                    triggerVictoryFireworks();
+                } else if (outcome === 'draw' && gameMode === 'ai') {
+                    document.getElementById('handshakeEffectContainer').classList.remove('hidden');
+                }
+                document.getElementById('resultModal').classList.remove('hidden');
+            }, 1000);
         }
 
         function resetToMenu() {
